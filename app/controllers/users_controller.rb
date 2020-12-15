@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.all.order(name: :asc)
   end
 
   # GET /users/1
@@ -28,12 +28,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        puts "user save ok (user controller)"
-        format.html { redirect_to @user, format: "html", notice: "User was successfully created." }
+        format.html { redirect_to user_path(@user, :html), notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
-        puts "!!!! user save KO (user controller)"
-        format.html { render :new, format: "html" }
+        format.html { render :new, format: "html", danger: "Error, user not created" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -44,7 +42,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, format: "html", notice: "User was successfully updated." }
+        format.html { redirect_to user_path(@user, :html), notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }

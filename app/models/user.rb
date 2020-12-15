@@ -23,9 +23,11 @@ class User < ApplicationRecord
   before_validation :check_email
 
   has_secure_password
+  validates :password, presence: true, length: { minimum: 4 }
 
-  def User.password_hash(p)
-    BCrypt::Password.create(p || "")
+  def User.digest(p)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
+    BCrypt::Password.create(p, cost: cost)
   end
 
   private

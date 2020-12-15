@@ -12,19 +12,16 @@
 #  updated_at      :datetime         not null
 #
 
-
-# one:
-#   id: 1
-#   name: user1
-#   email: user1@test.org
-#   password_digest: <%= hash_password("test")%>
-#   fullname: 'User 1'
-#   is_admin: false
-# 
-# two:
-#   id: 2
-#   name: user2
-#   email: user2@test.org
-#   password_digest: <%= hash_password("test")%>
-#   fullname: 'User 2'
-#   is_admin: false
+ one:
+   name: user_f1
+   email: user_f1@test.org
+   password_digest: <%=digest("test")%>
+   fullname: 'User f1'
+   is_admin: false
+ 
+ two:
+   name: user_f2
+   email: user_f2@test.org
+   password_digest: <%=digest("test")%>
+   fullname: 'User f2'
+   is_admin: false

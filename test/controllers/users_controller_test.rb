@@ -7,7 +7,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user_exist = User.create(
       name: "userexist",
       email: "userexist@test.org",
-      password_digest: User.password_hash("test"),
+      password: "test",
+      password_confirmation: "test",
       fullname: "User exists",
       is_admin: false,
     )
@@ -15,7 +16,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     @user = User.new(
       name: "usertest",
       email: "usertest@test.org",
-      password_digest: User.password_hash("test"),
+      password: "test",
+      password_confirmation: "test",
       fullname: "User test",
       is_admin: false,
     )
@@ -31,26 +33,26 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    get new_user_url
+    get new_user_url(:html)
     assert_response :success
   end
 
   test "should create user" do
+    u = @user
     assert_difference("User.count") do
-      u = @user
-      post users_url, params: {
-                        user: {
-                          name: u.name,
-                          email: u.email,
-                          fullname: u.fullname,
-                          is_admin: u.is_admin,
-                          password: "test",
-                          password_confirmation: "test",
-                        },
-                      }
+      post users_url(:html), params: {
+                               user: {
+                                 name: u.name,
+                                 email: u.email,
+                                 fullname: u.fullname,
+                                 is_admin: u.is_admin,
+                                 password: "test",
+                                 password_confirmation: "test",
+                               },
+                             }
     end
 
-    assert_redirected_to user_url(User.last)
+    assert_redirected_to user_url(User.last, :html)
   end
 
   test "should show user" do
@@ -59,37 +61,37 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show user JSON" do
-    get user_url(@user_exist) + ".json"
+    get user_url(@user_exist, :json)
     assert_response :success
     r = JSON.parse @response.body
     assert r["name"] == @user_exist.name
   end
 
   test "should get edit" do
-    get edit_user_url(@user_exist)
+    get edit_user_url(@user_exist, :html)
     assert_response :success
   end
 
   test "should update user" do
     u = @user_exist
-    patch user_url(u), params: {
-                         user: {
-                           email: u.email,
-                           fullname: u.fullname,
-                           is_admin: u.is_admin,
-                           name: u.name,
-                           password: "test",
-                           password_confirmation: "test",
-                         },
-                       }
-    assert_redirected_to user_url(u)
+    patch user_url(u, :html), params: {
+                                user: {
+                                  email: u.email,
+                                  fullname: u.fullname,
+                                  is_admin: u.is_admin,
+                                  name: u.name,
+                                  password: "test",
+                                  password_confirmation: "test",
+                                },
+                              }
+    assert_redirected_to user_url(u, :html)
   end
 
   test "should destroy user" do
     assert_difference("User.count", -1) do
-      delete user_url(@user_exist)
+      delete user_url(@user_exist, :html)
     end
 
-    assert_redirected_to users_url
+    assert_redirected_to users_url(:html)
   end
 end

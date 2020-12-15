@@ -11,6 +11,17 @@
   </head>
 
   <body>
+    <div>
+      <% if logged_in? %>
+        <%= link_to "Profile", user_path(current_user, :html) %> |
+        <%= link_to "Log out", logout_path, method: :delete %>
+      <% else %>
+        <%= link_to "Log in", login_path %>
+      <% end %>
+    </div>
+    <% flash.each do |message_type, message| %>
+      <div class="flash-<%= message_type %>"><%= message %></div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
