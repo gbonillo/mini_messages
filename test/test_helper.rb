@@ -1,4 +1,4 @@
-ENV['RAILS_ENV'] ||= 'test'
+ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 
@@ -11,3 +11,11 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+module FixtureFileHelpers
+  def hash_password(p)
+    BCrypt::Password.create(p)
+  end
+end
+
+ActiveRecord::FixtureSet.context_class.include FixtureFileHelpers

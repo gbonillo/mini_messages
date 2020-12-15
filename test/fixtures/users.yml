@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint           not null, primary key
+#  name            :string           not null
+#  email           :string           not null
+#  password_digest :string           not null
+#  fullname        :string
+#  is_admin        :boolean          default(FALSE), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+
+
+# one:
+#   id: 1
+#   name: user1
+#   email: user1@test.org
+#   password_digest: <%= hash_password("test")%>
+#   fullname: 'User 1'
+#   is_admin: false
+# 
+# two:
+#   id: 2
+#   name: user2
+#   email: user2@test.org
+#   password_digest: <%= hash_password("test")%>
+#   fullname: 'User 2'
+#   is_admin: false
