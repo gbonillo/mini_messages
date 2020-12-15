@@ -17,6 +17,14 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  def is_admin?
+    logged_in? && current_user&.is_admin?
+  end
+
+  def is_current_user?(user)
+    !user.nil? && logged_in? && !current_user&.nil? && current_user.id = user.id
+  end
+
   # Logs out the current user.
   def log_out
     reset_session

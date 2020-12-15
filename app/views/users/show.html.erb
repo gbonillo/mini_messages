@@ -16,6 +16,9 @@
   <strong>Is admin:</strong>
   <%= @user.is_admin %>
 </p>
-
-<%= link_to 'Edit', edit_user_path(@user, :html) %> |
-<%= link_to 'Back', users_path(:html) %>
+<% if is_admin? || is_current_user?(@user)  %>
+<%= link_to 'Edit', edit_user_path(@user, :html) %>
+<% end %>
+<% if is_admin? %>
+ | <%= link_to 'Users', users_path(:html) %>
+<% end %>

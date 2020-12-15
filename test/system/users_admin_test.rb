@@ -1,6 +1,6 @@
 require "application_system_test_case"
 
-class UsersTest < ApplicationSystemTestCase
+class UsersAdminTest < ApplicationSystemTestCase
   setup do
     #@user = users(:one)
     @user = User.new(
@@ -11,9 +11,16 @@ class UsersTest < ApplicationSystemTestCase
       fullname: "User test",
       is_admin: false,
     )
+
+    # log in admin session ...
+    admin = User.find_by(email: "admin_f1@test.org")
+    visit login_url(:html)
+    fill_in "Email", with: admin.email
+    fill_in "Password", with: "test"
+    click_on "Log in", { class: "btn" }
   end
 
-  test "visiting the index" do
+  test "visiting the users list" do
     visit users_url(:html)
     assert_selector "h1", text: "Users"
   end
@@ -31,7 +38,7 @@ class UsersTest < ApplicationSystemTestCase
     click_on "Create User"
 
     assert_text "User was successfully created"
-    click_on "Back"
+    click_on "Users"
   end
 
   test "updating a User" do
@@ -47,13 +54,14 @@ class UsersTest < ApplicationSystemTestCase
     click_on "Update User"
 
     assert_text "User was successfully updated"
-    click_on "Back"
+    click_on "Users"
   end
 
   test "destroying a User" do
     visit users_url(:html)
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      btn = page.all("a", text: "Destroy").last
+      btn.click
     end
 
     assert_text "User was successfully destroyed"

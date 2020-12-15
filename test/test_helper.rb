@@ -13,6 +13,23 @@ class ActiveSupport::TestCase
   def is_logged_in?
     !session[:user_id].nil?
   end
+
+  def login_as_admin
+    delete logout_url
+    post login_url, params: { session: { email: "admin_f1@test.org", password: "test" } }
+    assert session[:user_id] == User.find_by(email: "admin_f1@test.org").id
+  end
+
+  def login_as_user
+    delete logout_url
+    post login_url, params: { session: { email: "user_f1@test.org", password: "test" } }
+    assert_response :success
+  end
+
+  def logout
+    delete logout_url(:html)
+    follow_redirect!
+  end
 end
 
 module FixtureFileHelpers

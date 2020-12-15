@@ -11,6 +11,12 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
+ admin:
+   name: admin_f1
+   email: admin_f1@test.org
+   password_digest: <%=digest("test")%>
+   fullname: 'Admin User f1'
+   is_admin: true
 
  one:
    name: user_f1

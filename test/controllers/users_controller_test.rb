@@ -28,16 +28,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
+    login_as_admin
     get users_url
     assert_response :success
   end
 
   test "should get new" do
+    login_as_admin
     get new_user_url(:html)
     assert_response :success
   end
 
   test "should create user" do
+    login_as_admin
     u = @user
     assert_difference("User.count") do
       post users_url(:html), params: {
@@ -56,11 +59,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show user" do
+    login_as_admin
     get user_url(@user_exist)
     assert_response :success
   end
 
   test "should show user JSON" do
+    login_as_admin
     get user_url(@user_exist, :json)
     assert_response :success
     r = JSON.parse @response.body
@@ -68,11 +73,13 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit" do
+    login_as_admin
     get edit_user_url(@user_exist, :html)
     assert_response :success
   end
 
   test "should update user" do
+    login_as_admin
     u = @user_exist
     patch user_url(u, :html), params: {
                                 user: {
@@ -88,6 +95,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy user" do
+    login_as_admin
     assert_difference("User.count", -1) do
       delete user_url(@user_exist, :html)
     end
