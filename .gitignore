@@ -40,5 +40,6 @@ yarn-debug.log*
 .yarn-integrity
 
 # extras
+temp.txt
 .env
 /vendor/bundle
