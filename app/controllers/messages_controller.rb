@@ -1,15 +1,17 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:show, :edit, :update, :destroy]
+  before_action :set_message, only: [:edit, :update, :destroy]
   before_action :require_login
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all.visible(current_user).is_root
+    @messages = Message.all.eager_load(:author, :dest).visible(current_user).is_root
   end
 
   # GET /messages/1
   # GET /messages/1.json
   def show
+    @message = Message.eager_load(:author, :dest).find(params[:id])
+    @message.load_all_tree_replies_visible(current_user)
   end
 
   # GET /messages/new

@@ -21,9 +21,10 @@ class ActiveSupport::TestCase
   end
 
   def login_as_user
+    u = users(:user_f1)
     delete logout_url
-    post login_url, params: { session: { email: "user_f1@test.org", password: "test" } }
-    assert_response :success
+    post login_url, params: { session: { email: u.email, password: "test" } }
+    assert session[:user_id] == u.id
   end
 
   def logout

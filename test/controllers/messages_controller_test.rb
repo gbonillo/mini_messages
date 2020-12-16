@@ -2,7 +2,8 @@ require "test_helper"
 
 class MessagesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @message = messages(:one)
+    @message = messages(:message_simple)
+    login_as_user
   end
 
   test "should get index" do
@@ -16,7 +17,7 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create message" do
-    assert_difference('Message.count') do
+    assert_difference("Message.count") do
       post messages_url, params: { message: { content: @message.content, dest_id: @message.dest_id, is_public: @message.is_public, user_id: @message.user_id } }
     end
 
@@ -39,10 +40,9 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy message" do
-    assert_difference('Message.count', -1) do
+    assert_difference("Message.count", -1) do
       delete message_url(@message)
     end
-
     assert_redirected_to messages_url
   end
 end

@@ -5,8 +5,6 @@ Rails.application.routes.draw do
   defaults format: :json do
     post "/login", to: "sessions#create"
     delete "/logout", to: "sessions#destroy"
-  end
-  defaults format: :json do
     resources :users
   end
 

@@ -11,23 +11,18 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
- admin:
-   name: admin_f1
-   email: admin_f1@test.org
-   password_digest: <%=digest("test")%>
-   fullname: 'Admin User f1'
-   is_admin: true
+admin:
+  name: admin_f1
+  email: admin_f1@test.org
+  password_digest: <%=digest("test")%>
+  fullname: 'Admin User f1'
+  is_admin: true
 
- one:
-   name: user_f1
-   email: user_f1@test.org
-   password_digest: <%=digest("test")%>
-   fullname: 'User f1'
-   is_admin: false
- 
- two:
-   name: user_f2
-   email: user_f2@test.org
-   password_digest: <%=digest("test")%>
-   fullname: 'User f2'
-   is_admin: false
+<% (1..10).each do |i| %>
+user_f<%=i%>:
+  name: user_f<%=i%>
+  email: user_f<%=i%>@test.org
+  password_digest: <%=digest("test")%>
+  fullname: 'User f<%=i%>'
+  is_admin: false
+<% end %>

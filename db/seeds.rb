@@ -38,7 +38,7 @@ m1 = Message.create(
   user_id: users[1].id,
   dest_id: users[0].id,
   mparent_id: m.id,
-  mroot_id: m.id,
+  #mroot_id: m.id,
   is_public: true,
 )
 m2 = Message.create(
@@ -46,7 +46,7 @@ m2 = Message.create(
   user_id: users[2].id,
   dest_id: users[0].id,
   mparent_id: m.id,
-  mroot_id: m.id,
+  #mroot_id: m.id,
   is_public: true,
 )
 m1_1 = Message.create(
@@ -54,7 +54,7 @@ m1_1 = Message.create(
   user_id: users[0].id,
   dest_id: users[1].id,
   mparent_id: m1.id,
-  mroot_id: m.id,
+  #mroot_id: m.id,
   is_public: true,
 )
 m1_2 = Message.create(
@@ -62,6 +62,6 @@ m1_2 = Message.create(
   user_id: users[3].id,
   dest_id: users[1].id,
   mparent_id: m1.id,
-  mroot_id: m.id,
+  #mroot_id: m.id,
   is_public: false,
 )

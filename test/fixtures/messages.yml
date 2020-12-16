@@ -1,13 +1,44 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+<%  %>
 
-one:
-  content: MyText
-  user: one
-  dest_id: 
-  is_public: false
+message_simple:
+  content: Content of the Message simple
+  author: user_f1
+  dest: user_f2
+  is_public: true
 
-two:
-  content: MyText
-  user: two
-  dest_id: 
-  is_public: false
+message_simple2:
+  content: Content of the Message simple 2
+  author: user_f1
+  dest: user_f2
+  is_public: true
+
+<% (1..10).each do |i| %>
+message_f<%=i%>:
+  content: Content of the Message f<%=i%>
+  author: user_f1
+  dest: user_f2
+  is_public: true
+
+  <% if [1,2,3,4].include?(i) %>
+    <% (1..10).each do |j| %>
+message_f<%=i%>_<%=j%>:
+  content: Content of the Message f<%=i%>_<%=j%>
+  author: user_f2
+  dest: user_f1
+  parent_message: message_f<%=i%>
+  is_public: true
+      <% if [1,2,3,4].include?(j) %>
+        <% (1..10).each do |k| %>
+message_f<%=i%>_<%=j%>_<%=k%>:
+  content: Content of the Message f<%=i%>_<%=j%>_<%=k%>
+  author: user_f3
+  dest: user_f1
+  parent_message: message_f<%=i%>_<%=j%>
+  is_public: true
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
