@@ -25,3 +25,43 @@ users = []
     password_confirmation: "test",
   )
 end
+
+m = Message.create(
+  content: "Test message root!",
+  user_id: users[0].id,
+  dest_id: users[1].id,
+  is_public: true,
+)
+
+m1 = Message.create(
+  content: "Test message reply 1!",
+  user_id: users[1].id,
+  dest_id: users[0].id,
+  mparent_id: m.id,
+  mroot_id: m.id,
+  is_public: true,
+)
+m2 = Message.create(
+  content: "Test message reply 2!",
+  user_id: users[2].id,
+  dest_id: users[0].id,
+  mparent_id: m.id,
+  mroot_id: m.id,
+  is_public: true,
+)
+m1_1 = Message.create(
+  content: "Test message reply 1 to 1!",
+  user_id: users[0].id,
+  dest_id: users[1].id,
+  mparent_id: m1.id,
+  mroot_id: m.id,
+  is_public: true,
+)
+m1_2 = Message.create(
+  content: "Test message reply 2 to 1!",
+  user_id: users[3].id,
+  dest_id: users[1].id,
+  mparent_id: m1.id,
+  mroot_id: m.id,
+  is_public: false,
+)

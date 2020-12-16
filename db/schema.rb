@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_14_203559) do
+ActiveRecord::Schema.define(version: 2020_12_15_215957) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "user_id", null: false
+    t.bigint "dest_id", null: false
+    t.bigint "mparent_id"
+    t.bigint "mroot_id"
+    t.boolean "is_public", default: true, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dest_id"], name: "index_messages_on_dest_id"
+    t.index ["mparent_id"], name: "index_messages_on_mparent_id"
+    t.index ["mroot_id"], name: "index_messages_on_mroot_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
@@ -27,4 +42,8 @@ ActiveRecord::Schema.define(version: 2020_12_14_203559) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "messages", "messages", column: "mparent_id"
+  add_foreign_key "messages", "messages", column: "mroot_id"
+  add_foreign_key "messages", "users"
+  add_foreign_key "messages", "users", column: "dest_id"
 end
