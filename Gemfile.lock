@@ -65,6 +65,9 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
+    arask (1.2.3)
+      fugit (~> 1.1)
+      rails (>= 5.0)
     bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.5.1)
@@ -87,8 +90,13 @@ GEM
       dotenv (= 2.7.6)
       railties (>= 3.2)
     erubi (1.10.0)
+    et-orbi (1.2.4)
+      tzinfo
     ffi (1.13.1)
     ffi (1.13.1-x64-mingw32)
+    fugit (1.4.1)
+      et-orbi (~> 1.1, >= 1.1.8)
+      raabro (~> 1.4)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.5)
@@ -119,6 +127,7 @@ GEM
     public_suffix (4.0.6)
     puma (5.1.1)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     rack (2.2.3)
     rack-mini-profiler (2.2.0)
       rack (>= 1.2.0)
@@ -218,6 +227,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate (~> 3)
+  arask (~> 1.2.3)
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   byebug

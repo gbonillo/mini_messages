@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_15_215957) do
+ActiveRecord::Schema.define(version: 2020_12_17_201258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "arask_jobs", force: :cascade do |t|
+    t.string "job"
+    t.datetime "execute_at"
+    t.string "interval"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["execute_at"], name: "index_arask_jobs_on_execute_at"
+  end
 
   create_table "messages", force: :cascade do |t|
     t.text "content", null: false
