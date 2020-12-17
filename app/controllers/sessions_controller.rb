@@ -3,6 +3,10 @@ class SessionsController < ApplicationController
   before_action :check_logged_in, only: [:delete]
 
   def new
+    respond_to do |format|
+      format.html { render :new, format: "html" }
+      format.json { render json: "OK", status: :ok }
+    end
   end
 
   def create

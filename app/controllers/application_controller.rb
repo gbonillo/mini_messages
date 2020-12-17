@@ -1,7 +1,16 @@
 class ApplicationController < ActionController::Base
+  before_action :set_csrf_cookie
   include SessionsHelper
 
   private
+
+  #
+  # on stocke le token en cokkie pour permettre l'utilisation d'appel d'API
+  # le header X-CSRF-TOKEN doit ensuite être fourni avec cette valeur pour une requete POST
+  #
+  def set_csrf_cookie
+    cookies["CSRF-TOKEN"] = form_authenticity_token
+  end
 
   def require_login
     unless logged_in?
