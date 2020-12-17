@@ -1,8 +1,16 @@
 <%
-users_select = User.where.not(id: current_user.id)
-message.user_id=current_user.id;
+parent_message ||= nil
+users_select = User.allIdNameUserExcept(current_user)
+message.author = current_user
+form_url = messages_path
+if (message.id) 
+  form_url = message_path(message)
+end
+if (parent_message) 
+  form_url = reply_to_message_path(parent_message)
+end
 %>
-<%= form_with(model: message) do |form| %>
+<%= form_with(model: message, url: form_url) do |form| %>
   <% if message.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>

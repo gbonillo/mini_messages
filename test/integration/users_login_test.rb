@@ -2,7 +2,7 @@ require "test_helper"
 
 class UsersLoginTest < ActionDispatch::IntegrationTest
   def setup
-    @user = users(:one)
+    @user = users(:user_f1)
   end
 
   test "login with valid email/invalid password" do
@@ -22,9 +22,9 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     post login_path(:html), params: { session: { email: @user.email,
                                                 password: "test" } }
     assert is_logged_in?
-    assert_redirected_to user_path(@user, :html)
+    assert_redirected_to root_path
     follow_redirect!
-    assert_template "users/show"
+    assert_template "home/index"
     assert_select "a[href=?]", login_path, count: 0
     assert_select "a[href=?]", logout_path
     assert_select "a[href=?]", user_path(@user, :html)
@@ -32,7 +32,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_not is_logged_in?
     assert_redirected_to root_url
     follow_redirect!
-    assert_select "a[href=?]", login_path
+    assert_select "a[href=?]", login_path(:html)
     assert_select "a[href=?]", logout_path, count: 0
     assert_select "a[href=?]", user_path(@user), count: 0
   end

@@ -1,6 +1,8 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:edit, :update, :destroy]
   before_action :require_login
+  before_action :set_message, only: [:destroy] # :edit, :update,
+  before_action :check_and_prepare_reply, only: [:reply_new, :reply_create]
+
   # GET /messages
   # GET /messages.json
   def index
@@ -20,8 +22,8 @@ class MessagesController < ApplicationController
   end
 
   # GET /messages/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /messages
   # POST /messages.json
@@ -41,13 +43,37 @@ class MessagesController < ApplicationController
 
   # PATCH/PUT /messages/1
   # PATCH/PUT /messages/1.json
-  def update
+  # def update
+  #   respond_to do |format|
+  #     if @message.update(message_params)
+  #       format.html { redirect_to @message, notice: "Message was successfully updated." }
+  #       format.json { render :show, status: :ok, location: @message }
+  #     else
+  #       format.html { render :edit }
+  #       format.json { render json: @message.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+
+  # GET /messages/:id/reply/new
+  def reply_new
+    @message = Message.new
+    @message.parent_message = @parent_message
+  end
+
+  # POST /messages/:id/reply
+  # POST /messages/:id/reply.json
+  def reply_create
+    @parent_message = Message.find(params[:id])
+    @message = Message.new(message_params(true))
+    @message.parent_message = @parent_message
+
     respond_to do |format|
-      if @message.update(message_params)
-        format.html { redirect_to @message, notice: "Message was successfully updated." }
-        format.json { render :show, status: :ok, location: @message }
+      if @message.save
+        format.html { redirect_to @message, notice: "Message was successfully created." }
+        format.json { render :show, status: :created, location: @message }
       else
-        format.html { render :edit }
+        format.html { render :reply_new }
         format.json { render json: @message.errors, status: :unprocessable_entity }
       end
     end
@@ -65,13 +91,26 @@ class MessagesController < ApplicationController
 
   private
 
+  def check_and_prepare_reply
+    @parent_message = Message.find(params[:id])
+    unless current_user && current_user.id == @parent_message.dest_id
+      respond_to do |format|
+        e = "You can't reply to this message (you're not the recipient!)"
+        format.html { redirect_to root_url, flash: { alert: e } } # halts request cycle
+        format.json { render json: { error: e }, status: :unauthorized }
+      end
+    end
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_message
     @message = Message.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
-  def message_params
-    params.require(:message).permit(:content, :user_id, :dest_id, :is_public)
+  def message_params(is_reply = false)
+    attrs = [:content]
+    attrs += [:user_id, :dest_id, :is_public]
+    params.require(:message).permit(*attrs)
   end
 end

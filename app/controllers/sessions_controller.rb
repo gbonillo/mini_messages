@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  before_action :check_not_logged_in, only: [:new, :create]
+  before_action :check_logged_in, only: [:delete]
+
   def new
   end
 
@@ -8,8 +11,8 @@ class SessionsController < ApplicationController
       reset_session
       log_in user
       respond_to do |format|
-        format.html { redirect_to user_path(user, :html) }
-        format.json { redirect_to user_path(user, :json) }
+        format.html { redirect_to root_url(:html) }
+        format.json { render json: "", status: :accepted }
       end
     else
       flash.now[:alert] = "Invalid email/password combination"
@@ -23,5 +26,24 @@ class SessionsController < ApplicationController
   def destroy
     log_out
     redirect_to root_url
+  end
+
+  private
+
+  def _redirect_to_root
+    if condition
+      respond_to do |format|
+        format.html { redirect_to root_url(:html) }
+        format.json { render json: "Are you sure ?", status: :bad_request }
+      end
+    end
+  end
+
+  def check_not_logged_in
+    _redirect_to_root if logged_in?
+  end
+
+  def check_logged_in
+    _redirect_to_root if !logged_in?
   end
 end

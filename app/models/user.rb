@@ -30,6 +30,10 @@ class User < ApplicationRecord
     BCrypt::Password.create(p, cost: cost)
   end
 
+  def User.allIdNameUserExcept(user)
+    User.select([:id, :name]).where.not(id: user.id)
+  end
+
   private
 
   def trimAndLower!(str)

@@ -1,0 +1,8 @@
+
+<div class="box-message">
+  <div>
+    <%= message.author.name %> =&gt; <%= message.dest.name %>
+    | <%=message.is_public? ? "public" : "private"%>
+  </div>
+  <pre><%= message.content %></pre>
+</div>

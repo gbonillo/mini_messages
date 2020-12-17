@@ -29,16 +29,6 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_message_url(@message)
-    assert_response :success
-  end
-
-  test "should update message" do
-    patch message_url(@message), params: { message: { content: @message.content, dest_id: @message.dest_id, is_public: @message.is_public, user_id: @message.user_id } }
-    assert_redirected_to message_url(@message)
-  end
-
   test "should destroy message" do
     assert_difference("Message.count", -1) do
       delete message_url(@message)

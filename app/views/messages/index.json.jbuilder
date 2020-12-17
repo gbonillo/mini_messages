@@ -1,1 +1,1 @@
-json.array! @messages, partial: "messages/message", as: :message, allRepliesByParent: nil
+json.array! @messages, partial: "messages/message", as: :message, all_replies_by_parent: nil

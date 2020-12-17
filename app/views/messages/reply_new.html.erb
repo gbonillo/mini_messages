@@ -1,0 +1,9 @@
+<h1>Reply to Message</h1>
+
+<h2>Parent Message</h2>
+<%= render 'message', message: @parent_message %>
+
+<h2>Reply</h2>
+<%= render 'form', message: @message, parent_message: @parent_message %>
+
+<%= link_to 'Back', message_path(@parent_message) %>

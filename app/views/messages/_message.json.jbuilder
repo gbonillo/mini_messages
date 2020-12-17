@@ -3,7 +3,7 @@
 # paramètres :
 #   message :
 #     message courant
-#   allRepliesByParent :
+#   all_replies_by_parent :
 #     toute les reponses du fil de discussion dans une hashmap par mparent_id (@see Message#load_all_tree_replies_visible)
 #     si ce paramètre n'est pas présent on affiche pas du tout les réponses (champs replies) !
 #
@@ -13,11 +13,11 @@ json.extract! message, :id, :content, :is_public, :created_at, :updated_at
     json.extract! message.send(attr), :id, :name
   end
 end
-if (allRepliesByParent)
-  if (allRepliesByParent[message.id])
+if (all_replies_by_parent)
+  if (all_replies_by_parent[message.id])
     json.replies do
       #json.array! message.replies.visible(current_user), partial: "messages/message", as: :message
-      json.array! allRepliesByParent[message.id], partial: "messages/message", as: :message, allRepliesByParent: allRepliesByParent
+      json.array! all_replies_by_parent[message.id], partial: "messages/message", as: :message, all_replies_by_parent: all_replies_by_parent
     end
   else
     json.replies []

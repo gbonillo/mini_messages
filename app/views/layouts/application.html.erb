@@ -14,10 +14,10 @@
     <div>
       <%= link_to "Home", root_path %>
       <% if logged_in? %>
-        | <%= link_to "Profile", user_path(current_user, :html) %>
+        | <%= link_to "Profile [#{current_user.name}]", user_path(current_user, :html) %>
         | <%= link_to "Log out", logout_path, method: :delete %>
       <% else %>
-        | <%= link_to "Log in", login_path %>
+        | <%= link_to "Log in", login_path(:html) %>
       <% end %>
     </div>
     <% flash.each do |message_type, message| %>
