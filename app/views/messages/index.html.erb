@@ -1,4 +1,8 @@
-<h1>Messages</h1>
+
+
+<h1>Messages - <%= @is_thread ? "Threads" : "Recents"%></h1>
+
+<%= link_to !@is_thread ? "Threads" : "Recents", messages_path(view: !@is_thread ? "thread" : "recent") %>
 
 <table>
   <thead>
@@ -14,7 +18,7 @@
   <tbody>
     <% @messages.each do |message| %>
       <tr>
-        <td><%= message.content %></td>
+        <td><%= message.mparent_id ? "[R]" : "[T]"%> <%= message.content %></td>
         <td><%= message.author.name %></td>
         <td><%= message.dest.name %></td>
         <td><%= message.is_public %></td>

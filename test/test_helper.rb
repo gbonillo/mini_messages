@@ -15,13 +15,14 @@ class ActiveSupport::TestCase
   end
 
   def login_as_admin
+    u = users(:admin)
     delete logout_url
-    post login_url, params: { session: { email: "admin_f1@test.org", password: "test" } }
-    assert session[:user_id] == User.find_by(email: "admin_f1@test.org").id
+    post login_url, params: { session: { email: u.email, password: "test" } }
+    assert session[:user_id] == u.id
   end
 
-  def login_as_user
-    u = users(:user_f1)
+  def login_as_user(user_fixture = :user_f1)
+    u = users(user_fixture)
     delete logout_url
     post login_url, params: { session: { email: u.email, password: "test" } }
     assert session[:user_id] == u.id

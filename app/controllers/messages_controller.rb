@@ -6,7 +6,20 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all.eager_load(:author, :dest).visible(current_user).is_root
+    @is_thread = false
+    if params["view"] && params["view"] == "thread"
+      @is_thread = true
+      @messages = Message.all
+        .eager_load(:author, :dest)
+        .is_root
+        .visible(current_user)
+        .order(created_at: "desc")
+    else
+      @messages = Message.all
+        .eager_load(:author, :dest)
+        .visible(current_user)
+        .order(created_at: "desc")
+    end
   end
 
   # GET /messages/1

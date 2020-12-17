@@ -3,9 +3,6 @@ parent_message ||= nil
 users_select = User.allIdNameUserExcept(current_user)
 message.author = current_user
 form_url = messages_path
-if (message.id) 
-  form_url = message_path(message)
-end
 if (parent_message) 
   form_url = reply_to_message_path(parent_message)
 end
@@ -27,12 +24,14 @@ end
     <%= form.label :content %>
     <%= form.text_area :content %>
   </div>
-
+  
   <div class="field">
     <%= form.label :user_id %>
     <%= form.hidden_field :user_id %>
     <%= form.text_field :user_name, value: current_user.name, disabled: true %>
   </div>
+
+  <% if (!parent_message)  %>
 
   <div class="field">
     <%= form.label :dest_id %>
@@ -44,7 +43,9 @@ end
     <%= form.check_box :is_public %>
   </div>
 
+  <% end %>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit value: parent_message ? "Reply" : "Create Message" %>
   </div>
 <% end %>
