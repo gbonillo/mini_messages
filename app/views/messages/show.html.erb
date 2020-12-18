@@ -1,6 +1,8 @@
-<p id="notice"><%= notice %></p>
 
 <%= render 'message', message: @message %>
 
-<%= link_to 'Reply', reply_to_message_path(@message) %> |
+<% if @current_user && @current_user.id == @message.dest_id %>
+  <%= link_to 'Reply', reply_to_message_path(@message) %> |
+<% end %>
+
 <%= link_to 'Back', messages_path %>

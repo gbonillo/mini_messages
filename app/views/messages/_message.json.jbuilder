@@ -21,7 +21,7 @@ if (all_replies_by_parent)
         partial: "messages/message",
         as: :message,
         all_replies_by_parent: all_replies_by_parent,
-        show_thread_url: show_thread_url
+        show_thread_url: false #show_thread_url
     end
   else
     json.replies []
