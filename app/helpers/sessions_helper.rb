@@ -24,7 +24,7 @@ module SessionsHelper
   end
 
   def is_current_user?(user)
-    !user.nil? && logged_in? && !current_user&.nil? && current_user.id = user.id
+    !user.nil? && logged_in? && !current_user&.nil? && current_user.id == user.id
   end
 
   # Logs out the current user.

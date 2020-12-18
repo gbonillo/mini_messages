@@ -17,7 +17,6 @@ class MessagesTest < ApplicationSystemTestCase
     click_on "New Message"
 
     fill_in "Content", with: @message.content
-    #fill_in "User", with: @message.user_id
     page.select @message.dest.name, from: "Dest"
     check "Is public" if @message.is_public
     click_on "Create Message"
@@ -53,14 +52,6 @@ class MessagesTest < ApplicationSystemTestCase
 
   def _login(user_fixture = :user_f1)
     # log in user session ...
-    # visit root_url
-    # begin
-    #   if find("Log out")
-    #     click_on "Log out"
-    #   end
-    # rescue Capybara::ElementNotFound => e
-    #   # skip!
-    # end
     @user = users(user_fixture)
     visit login_url(:html)
     fill_in "Email", with: @user.email

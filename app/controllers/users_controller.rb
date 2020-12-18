@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
-  before_action :require_admin, only: [:index, :new, :create, :destroy]
+  before_action :require_login, only: [:index]
+  before_action :require_admin, only: [:new, :create, :destroy]
   before_action only: [:show, :edit, :update] do
     require_self_or_admin(@user)
   end

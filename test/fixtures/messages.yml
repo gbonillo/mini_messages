@@ -13,6 +13,12 @@ message_simple2:
   dest: user_f2
   is_public: true
 
+message_from_u2_to_u1:
+  content: Content of the Message u2 to u1
+  author: user_f2
+  dest: user_f1
+  is_public: true
+
 <% (1..10).each do |i| %>
 message_f<%=i%>:
   content: Content of the Message f<%=i%>
@@ -27,14 +33,16 @@ message_f<%=i%>_<%=j%>:
   author: user_f2
   dest: user_f1
   parent_message: message_f<%=i%>
+  root_message: message_f<%=i%>
   is_public: true
       <% if [1,2,3,4].include?(j) %>
         <% (1..10).each do |k| %>
 message_f<%=i%>_<%=j%>_<%=k%>:
   content: Content of the Message f<%=i%>_<%=j%>_<%=k%>
-  author: user_f3
+  author: user_f2
   dest: user_f1
   parent_message: message_f<%=i%>_<%=j%>
+  root_message: message_f<%=i%>
   is_public: true
         <% end %>
       <% end %>

@@ -34,39 +34,29 @@ class MessagesController < ApplicationController
     @message = Message.new
   end
 
-  # GET /messages/1/edit
-  # def edit
-  # end
-
   # POST /messages
   # POST /messages.json
   def create
-    @message = Message.new(message_params)
+    begin
+      @message = Message.new(message_params)
 
-    respond_to do |format|
-      if @message.save
-        format.html { redirect_to @message, notice: "Message was successfully created." }
-        format.json { render :show, status: :created, location: @message }
-      else
-        format.html { render :new }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @message.save
+          format.html { redirect_to @message, notice: "Message was successfully created." }
+          format.json { render :show, status: :created, location: @message }
+        else
+          format.html { render :new }
+          format.json { render json: @message.errors, status: :unprocessable_entity }
+        end
+      end
+    rescue
+      respond_to do |format|
+        e = "Bad request!"
+        format.html { redirect_to root_url, flash: { alert: e } } # halts request cycle
+        format.json { render json: { error: e }, status: :unprocessable_entity }
       end
     end
   end
-
-  # PATCH/PUT /messages/1
-  # PATCH/PUT /messages/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @message.update(message_params)
-  #       format.html { redirect_to @message, notice: "Message was successfully updated." }
-  #       format.json { render :show, status: :ok, location: @message }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @message.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   # GET /messages/:id/reply/new
   def reply_new
