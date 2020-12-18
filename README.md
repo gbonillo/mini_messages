@@ -17,15 +17,19 @@ J'ai mis en place une authentification ultra simple uniquement pour avoir des ut
 Le résultat est donc une application avec une interface "web" brut de fonderie mais à peu près fonctionnelle qui permet des appels d'API. Ce n'est pas vraiment le top, ni vraiment ce qui était demandé... 
 
 L'accès à l'api peut se faire en fonction du contexte :
-    - dans le navigateur avec une session http en cours (et un user identifié) : accès aux url de l'api avec les extensions ".json"
-    - depuis "l'extérieur" (sans session htttp) avec une authentification "http basic" de l'utilisateur... (pas très top :)
+  - dans le navigateur avec une session http en cours (et un user identifié) : accès aux url de l'api avec les extensions ".json"
+  - depuis "l'extérieur" (sans session htttp) avec une authentification "http basic" de l'utilisateur... (pas très top :)
 
-Les tests initiaux (web) sont fait avec le module minitest dans le répertoire /test/  
-Les tests de l'api sont fait en rspec pour pouvoir générer automatiqment la doc.
+Les tests initiaux (web) sont faits avec le module minitest dans le répertoire /test/  
+Les tests de l'api sont faits en rspec pour pouvoir générer automatiqment la doc.
 
 ## API doc
 Voir la doc de l'API dans le dossier doc/api/ : [doc/api/index.html](doc/api/index.html)
 Celle-ci a été autogénérée à partir de test de spec avec "rspec_api_documentation"
+
+Pour régénérer la doc de l'api :
+
+    rake docs:generate
 
 ## General information
 
